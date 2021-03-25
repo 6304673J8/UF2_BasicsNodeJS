@@ -3,3 +3,33 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.more-info{
+	background-color:#eeeeee;
+	flex-grow:1;
+}
+
+.more-info h2{
+	display:none;
+}
+
+.social-networks{
+	background-color:#eeeeff;
+	flex-grow:2;
+}
+
+.social-networks ul{
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+
+.social-networks h2{
+	margin:0;
+}
+
+.social-networks a{
+	display:block;
+	color:#ffffff;
+	text-decoration:none;
+}
