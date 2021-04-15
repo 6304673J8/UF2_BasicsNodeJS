@@ -7,8 +7,8 @@ class ItemList extends Component {
 		return (
 			<li>
 				{this.props.item}
-				<button>X</button>
-			</li>	
+				<button>X {this.props.eraseItem}</button>
+			</li>
 		);
 	}
 }

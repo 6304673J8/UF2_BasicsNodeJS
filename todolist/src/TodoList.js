@@ -5,12 +5,14 @@ class TodoList extends Component {
 	constructor (props) {
 		super(props);
 
+		let contador = 1;
 		let todo_tasks= [];
 		this.state = {
 			items : todo_tasks
 		};
 
 		this.addItem = this.addItem.bind(this);
+		this.eraseItem = this.eraseItem.bind(this);
 	}
 
 	addItem(e) {
@@ -18,10 +20,19 @@ class TodoList extends Component {
 
 		let text_v = document.getElementById("text-task").value;
 				
-		this.state.items.push({id:10, item:text_v});
+		this.state.items.push({id:0, item:text_v});
 		this.setState({
 			items: this.state.items
 		});
+	}
+
+	eraseItem(e) {
+		
+		let text_v = document.getElementById("text-task").value;
+		this.state.items.splice({id:0, item:text_v});
+		this.setState({
+			items: this.state.items
+		});	
 	}
 
 	render() {
