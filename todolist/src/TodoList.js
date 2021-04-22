@@ -53,8 +53,7 @@ class TodoList extends Component {
 		});
 		
 		return (
-			<div>
-        <p>Num Items: NUM</p>
+			<div className="main-box">
 
 				<form onSubmit={this.addItem}>
 					<p><input type="text" id="text-task" />

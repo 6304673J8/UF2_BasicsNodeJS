@@ -14,7 +14,7 @@ class ItemList extends Component {
 	}
 	render(){ 
 		return (
-			<li>
+			<li className="list">
 				{this.props.item}
 				<button className="delete" onClick={this.eraseItem}>X</button>
 			</li>
