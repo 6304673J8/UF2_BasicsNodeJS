@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HYPO ENTI V.00000000042</title>
+	</head>
+
+	<body>
+		<main>
+			<form id="item-form">
+				<p>
+					<input type="text" name="item" id="item" placeholder="Item name"/>
+					<input type="text" name="cost" id="cost" placeholder="Item cost" />
+					<button>Enviar</button>
+				</p>
+
+			</form>
+			<div id="list">
+
+			</div>
+		</main>
+
+		<script>
+			const refresh_time = 500;
+			document.getElementByID("item-form").addEventListener('submit', e => {
+       				e.preventDefault();
+        			let item = document.getElementByID("item").value;
+				let cost = document.getElementByID("cost").value;
+
+    				fetch("/submit", {
+        				method: "POST",
+        				headers: {
+   					 	'Content-Type': 'text/json'
+					},
+					body: JSON.stringify({
+    						chat_user: item,
+    						chat_msg: cost
+					})
+				});
+			});
+			setInterval(() => {
+				fetch("/list")
+					.then( response => response.json())
+					.then( data => {
+						let list = '';
+						for (let i = 0; i < data.length; i++){
+							list += "<li>"+data[i].item+": "+data[i].cost+"</li>";
+						}
+						document.getElementById("list").innerHTML = "<ul>"+list+"</ul>";
+					
+				});
+			}, refresh_time);
+		</script>
+	</body>
+</html>
