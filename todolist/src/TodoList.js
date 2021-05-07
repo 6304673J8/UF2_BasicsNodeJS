@@ -12,6 +12,22 @@ class TodoList extends Component {
 		this.last_id = 0;
 		this.addItem = this.addItem.bind(this);
 		this.eraseItem = this.eraseItem.bind(this);
+	
+		fetch("//10.40.1.44:8081/get_items")
+                        .then (res => res.json())
+                        .then(data => {
+                                data.forEach(item => {
+                                        this.state.items.push({
+                                                id: item.id,
+                                                item: item.item
+                                        });
+                                });
+                                this.setState({
+                                        items: this.state.items
+                                });
+                                this.last_id = data[data.lenght-1].id;
+                        });
+
 	}
 
 	addItem(e) {
@@ -43,7 +59,8 @@ class TodoList extends Component {
 			},
 			body: item_data
 		});
-	}
+
+		}
 
 	eraseItem(id_item) {
 		for (let i=0; i < this.state.items.length; i++){
@@ -62,7 +79,8 @@ class TodoList extends Component {
 		let lista = this.state.items.map( (todo_item) => {
 			return (<ItemList item={todo_item.item}
 					id_item={todo_item.id}
-					parentRemove={this.eraseItem} />);
+					parentRemove={this.eraseItem}
+				/>);
 		});
 		
 		return (

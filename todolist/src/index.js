@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 //import App from './App';
 import TodoList from './TodoList';
 import './index.css';
-import './TodoList.css'
-import './ItemList.css'
 
 ReactDOM.render(
-  <TodoList />,
+  <div>
+    <h1>Todo List</h1>
+	<TodoList />
+  </div>,
   document.getElementById('root')
 );
