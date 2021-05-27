@@ -89,7 +89,7 @@ class TodoList extends Component {
 			<div className="main-box">
 
 				<form onSubmit={this.addItem}>
-					<p><TextFiel id="text-task" 
+					<p><TextField id="text-task" 
 					autocomplete="off" helperText="Add Item" />
 					<Button color="primary" variant="contained" type="submit">Add</Button></p>
 				</form>

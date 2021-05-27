@@ -1,6 +1,14 @@
+h1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px;
+	font-size:35px;
+}
 .main-box{
 	border: 2px solid black;
 	outline: #7faf4c solid 10px;
+	max-width: 40%;
 	margin:auto;
 	padding:20px;
 	text-align:center;
