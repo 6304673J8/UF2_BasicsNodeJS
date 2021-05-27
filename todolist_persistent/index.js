@@ -3,7 +3,7 @@
 const http = require("http");
 const mongo = require("mongodb").MongoClient;
 
-let server_url = "mongodb://localhost:27017";
+const server_url = "mongodb://localhost:27017";
 let todolist_db;
 mongo.connect(server_url, (err, server) => {
 	if(err){
@@ -13,11 +13,9 @@ mongo.connect(server_url, (err, server) => {
 	console.log("Into MONGODB Server");
 
 	todolist_db = server.db("todolist");
-
-	//chat_db.collection("chat").find({});
 });
 
-console.log("INIT LIST SERVER");
+//console.log("INIT LIST SERVER");
 
 http.createServer( (request, response) => {	
 	console.log("File"+request.url);
@@ -32,18 +30,6 @@ http.createServer( (request, response) => {
 		response.end();
 		return;
 	}
-	/*if (request.url == "/list"){
-		//console.log("Chat Starting");
-		let itemCursor = todolist_db.collection("items").find({});
-
-		itemCursor.toArray().then( (data) =>{
-			response.writeHead(200, {'Content-Type': 'text/plain'});
-			response.write( JSON.stringify(data));
-			response.end();
-		});
-
-		return;
-	}*/
 
 	if (request.url == "/submit"){
 		console.log("sent item");
@@ -73,9 +59,22 @@ http.createServer( (request, response) => {
 			response.writeHead( 200, {'Content-Type':'text/json' });
 			response.write(JSON.stringify(data));
 			response.end();
-			todolist_db.collection("items".find({
-			});
 		});
+	}
+	else if (request.url == "/remove"){
+		let body = [];
+		request.on("data", chunk => {
+			body.push(chunk);
+		}).on("end", () => {
+			let data = Buffer.concat(body).toString();
+			let item_data = JSON.parse(data);
+
+			todolist_db.collection("items").deleteOne({
+				id: item_data.id,
+				item_name: item_data.item_name
+			});			
+		});
+		response.end();
 	}
 }).listen(8081);
 

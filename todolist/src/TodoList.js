@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ItemList from './ItemList';
+import { Button } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 class TodoList extends Component {
 	constructor (props) {
@@ -60,7 +62,7 @@ class TodoList extends Component {
 			body: item_data
 		});
 
-		}
+	}
 
 	eraseItem(id_item) {
 		for (let i=0; i < this.state.items.length; i++){
@@ -87,8 +89,9 @@ class TodoList extends Component {
 			<div className="main-box">
 
 				<form onSubmit={this.addItem}>
-					<p><input type="text" id="text-task" />
-					<button type="submit">Add</button></p>
+					<p><TextFiel id="text-task" 
+					autocomplete="off" helperText="Add Item" />
+					<Button color="primary" variant="contained" type="submit">Add</Button></p>
 				</form>
 				
 				<ul>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import { Button } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import './TodoList.css';
 
 class ItemList extends Component {
@@ -16,7 +17,13 @@ class ItemList extends Component {
 		return (
 			<li className="list">
 				{this.props.item}
-				<button className="delete" onClick={this.eraseItem}>X</button>
+		
+			<Button className="delete" color="secondary" 
+				variant="contained" onClick={this.eraseItem}>
+				<DeleteIcon />
+				
+			</Button>
+
 			</li>
 		);
 	}
