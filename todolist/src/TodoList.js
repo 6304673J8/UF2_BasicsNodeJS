@@ -15,13 +15,13 @@ class TodoList extends Component {
 		this.addItem = this.addItem.bind(this);
 		this.eraseItem = this.eraseItem.bind(this);
 	
-		fetch("//10.40.1.44:8081/get_items")
-                        .then (res => res.json())
-                        .then(data => {
-                                data.forEach(item => {
+		fetch("//192.168.0.22:8081/get_items")
+			.then(res => res.json())
+			.then(data => {
+                                data.forEach(item_l => {
                                         this.state.items.push({
-                                                id: item.id,
-                                                item: item.item
+                                                id: item_l.id,
+                                                item: item_l.item
                                         });
                                 });
                                 this.setState({
@@ -29,7 +29,6 @@ class TodoList extends Component {
                                 });
                                 this.last_id = data[data.lenght-1].id;
                         });
-
 	}
 
 	addItem(e) {
@@ -37,37 +36,46 @@ class TodoList extends Component {
 
 		let text_v = document.getElementById("text-task").value;
 		
-		document.getElementById("text-task").value = "";
-		document.getElementById("text-task").value.focus;
-		
+	
 		this.last_id++;
 
-		this.state.items.push({id: this.last_id, item:text_v});
-		console.log(this.state.items);
+		if(text_v !== ""){
+			this.state.items.push({id: this.last_id, item:text_v});
+			console.log(this.state.items);
 
-		this.setState({
-			items: this.state.items
-		});
+			this.setState({
+				items: this.state.items
+			});
 
-		let item_data = JSON.stringify({
-			id: this.last_id,
-			item: text_v
-		});
+			fetch("//192.168.0.22:8081/submit", {
+				method: "POST",
+				headers: {
+					'Content-Type':'text/json',
+				},
+				body: JSON.stringify({
+					id: this.last_id,
+					item:text_v
+				})
+			});
 
-		fetch("//10.40.1.44:8081/submit", {
-			method: "POST",
-			headers: {
-				'Content-Type':'text/json',
-			},
-			body: item_data
-		});
+			document.getElementById("text").value="";
 
+			document.getElementById("text").focus();
+		}
 	}
 
 	eraseItem(id_item) {
 		for (let i=0; i < this.state.items.length; i++){
 			if(this.state.items[i].id === id_item){
-				this.state.items.splice(i, 1);
+				let itemToErase = this.state.items[i];
+				fetch("//192.168.0.22:8081/remove", {
+					method: "POST",
+					headers:{
+						'Content-type' : "text/json"
+					},
+					body: JSON.stringify(itemToErase)
+				});
+				this.state.items.splice(i,1);
 				break;
 			}
 		}
@@ -89,9 +97,8 @@ class TodoList extends Component {
 			<div className="main-box">
 
 				<form onSubmit={this.addItem}>
-					<p><TextField id="text-task" 
-					autocomplete="off" helperText="Add Item" />
-					<Button color="primary" variant="contained" type="submit">Add</Button></p>
+					<p><TextField label="Add Item" variant="outlined" type="text" id="text-task" autocomplete="off" /></p>
+					<p><Button color="primary" variant="contained" type="submit">Add</Button></p>
 				</form>
 				
 				<ul>

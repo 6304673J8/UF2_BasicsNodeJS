@@ -34,9 +34,9 @@ http.createServer( (request, response) => {
 	if (request.url == "/submit"){
 		console.log("sent item");
 		let body = [];
-		request.on('data', (chunk) => {
+		request.on("data", (chunk) => {
 			body.push(chunk);
-		}).on('end', () => {
+		}).on("end", () => {
 			let data = Buffer.concat(body).toString();
 
 			console.log(data);
@@ -49,9 +49,7 @@ http.createServer( (request, response) => {
 			
 			});
 		});
-
 		response.end();
-		return;
 	}
 	else if (request.url == "/get_items"){
 		let list = todolist_db.collection("items").find({}).toArray();
